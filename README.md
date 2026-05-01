@@ -4,6 +4,7 @@ A comprehensive safety platform designed for women, students, and vulnerable gro
 
 ## Features
 
+ 
 - **SOS Emergency Alert**: One-tap emergency button with instant location sharing
 - **Smart Geofencing**: Automatic alerts when entering/leaving safe zones
 - **Community Helpers Network**: Connect with verified helpers within 500m radius
