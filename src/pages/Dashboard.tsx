@@ -82,49 +82,49 @@ const Dashboard = () => {
           <div className="lg:col-span-2 space-y-6">
             <div className="bg-card rounded-xl border overflow-hidden animate-fade-in">
               <div className="border-b bg-muted/30">
-                <div className="flex items-center gap-2 p-4">
+                <div className="flex items-center gap-1 p-3 overflow-x-auto scrollbar-hide">
                   <button
                     onClick={() => setActiveTab("map")}
-                    className={`px-4 py-2 rounded-lg transition-smooth ${
+                    className={`px-3 py-2 rounded-lg transition-smooth whitespace-nowrap text-sm ${
                       activeTab === "map"
                         ? "bg-primary text-primary-foreground"
                         : "hover:bg-muted"
                     }`}
                   >
-                    <MapPin className="h-4 w-4 inline mr-2" />
-                    Map View
+                    <MapPin className="h-4 w-4 inline mr-1" />
+                    Map
                   </button>
                   <button
                     onClick={() => setActiveTab("zones")}
-                    className={`px-4 py-2 rounded-lg transition-smooth ${
+                    className={`px-3 py-2 rounded-lg transition-smooth whitespace-nowrap text-sm ${
                       activeTab === "zones"
                         ? "bg-primary text-primary-foreground"
                         : "hover:bg-muted"
                     }`}
                   >
-                    <Shield className="h-4 w-4 inline mr-2" />
-                    Safe Zones
+                    <Shield className="h-4 w-4 inline mr-1" />
+                    Zones
                   </button>
                   <button
                     onClick={() => setActiveTab("contacts")}
-                    className={`px-4 py-2 rounded-lg transition-smooth ${
+                    className={`px-3 py-2 rounded-lg transition-smooth whitespace-nowrap text-sm ${
                       activeTab === "contacts"
                         ? "bg-primary text-primary-foreground"
                         : "hover:bg-muted"
                     }`}
                   >
-                    <Phone className="h-4 w-4 inline mr-2" />
+                    <Phone className="h-4 w-4 inline mr-1" />
                     Contacts
                   </button>
                   <button
                     onClick={() => setActiveTab("timer")}
-                    className={`px-4 py-2 rounded-lg transition-smooth ${
+                    className={`px-3 py-2 rounded-lg transition-smooth whitespace-nowrap text-sm ${
                       activeTab === "timer"
                         ? "bg-primary text-primary-foreground"
                         : "hover:bg-muted"
                     }`}
                   >
-                    <Clock className="h-4 w-4 inline mr-2" />
+                    <Clock className="h-4 w-4 inline mr-1" />
                     Timer
                   </button>
                 </div>

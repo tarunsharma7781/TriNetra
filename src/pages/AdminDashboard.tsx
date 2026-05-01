@@ -131,8 +131,8 @@ const AdminContent = ({ onSignOut }: { onSignOut: () => void }) => {
           </Card>
         </div>
 
-        {/* Users Table */}
-        <Card className="p-6 animate-fade-in">
+        {/* Users - mobile cards + desktop table */}
+        <Card className="p-4 md:p-6 animate-fade-in">
           <div className="flex items-center gap-2 mb-4">
             <Users className="h-5 w-5 text-primary" />
             <h2 className="text-lg font-bold">Registered Users</h2>
@@ -142,39 +142,57 @@ const AdminContent = ({ onSignOut }: { onSignOut: () => void }) => {
           ) : profiles?.length === 0 ? (
             <p className="text-muted-foreground text-sm">No users found.</p>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">#</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Name</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Phone</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Helper</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Joined</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {profiles?.map((profile, index) => (
-                    <tr key={profile.id} className="border-b hover:bg-muted/30 transition-colors">
-                      <td className="py-3 px-2 text-muted-foreground">{index + 1}</td>
-                      <td className="py-3 px-2 font-medium">{profile.full_name}</td>
-                      <td className="py-3 px-2">{profile.phone || "—"}</td>
-                      <td className="py-3 px-2">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${profile.is_helper_available ? "bg-success/10 text-green-700 border border-success/20" : "bg-muted text-muted-foreground"}`}>
-                          {profile.is_helper_available ? "Available" : "Unavailable"}
-                        </span>
-                      </td>
-                      <td className="py-3 px-2 text-muted-foreground">{new Date(profile.created_at).toLocaleDateString()}</td>
+            <>
+              {/* Mobile cards */}
+              <div className="flex flex-col gap-3 md:hidden">
+                {profiles?.map((profile, index) => (
+                  <div key={profile.id} className="bg-muted/30 rounded-lg p-3 space-y-1">
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm">{index + 1}. {profile.full_name}</p>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${profile.is_helper_available ? "bg-success/10 text-green-700 border border-success/20" : "bg-muted text-muted-foreground border"}`}>
+                        {profile.is_helper_available ? "Helper" : "Not Helper"}
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{profile.phone || "No phone"}</p>
+                    <p className="text-xs text-muted-foreground">Joined: {new Date(profile.created_at).toLocaleDateString()}</p>
+                  </div>
+                ))}
+              </div>
+              {/* Desktop table */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">#</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Name</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Phone</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Helper</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Joined</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {profiles?.map((profile, index) => (
+                      <tr key={profile.id} className="border-b hover:bg-muted/30 transition-colors">
+                        <td className="py-3 px-2 text-muted-foreground">{index + 1}</td>
+                        <td className="py-3 px-2 font-medium">{profile.full_name}</td>
+                        <td className="py-3 px-2">{profile.phone || "—"}</td>
+                        <td className="py-3 px-2">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${profile.is_helper_available ? "bg-success/10 text-green-700 border border-success/20" : "bg-muted text-muted-foreground"}`}>
+                            {profile.is_helper_available ? "Available" : "Unavailable"}
+                          </span>
+                        </td>
+                        <td className="py-3 px-2 text-muted-foreground">{new Date(profile.created_at).toLocaleDateString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </Card>
 
-        {/* SOS Logs Table */}
-        <Card className="p-6 animate-fade-in">
+        {/* SOS Logs - mobile cards + desktop table */}
+        <Card className="p-4 md:p-6 animate-fade-in">
           <div className="flex items-center gap-2 mb-4">
             <AlertCircle className="h-5 w-5 text-destructive" />
             <h2 className="text-lg font-bold">SOS Logs</h2>
@@ -184,76 +202,73 @@ const AdminContent = ({ onSignOut }: { onSignOut: () => void }) => {
           ) : sosLogs?.length === 0 ? (
             <p className="text-muted-foreground text-sm">No SOS logs found.</p>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b">
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">#</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">User ID</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Location</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Trigger</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Status</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Resolved</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Remark</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Time</th>
-                    <th className="text-left py-3 px-2 text-muted-foreground font-medium">Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sosLogs?.map((log, index) => (
-                    <tr key={log.id} className="border-b hover:bg-muted/30 transition-colors">
-                      <td className="py-3 px-2 text-muted-foreground">{index + 1}</td>
-                      <td className="py-3 px-2 font-mono text-xs">{log.user_id.slice(0, 8)}...</td>
-                      <td className="py-3 px-2 text-xs max-w-[150px] truncate" title={log.location_address || ""}>
-                        {log.location_address ? log.location_address.substring(0, 30) + "..." : `${log.latitude}, ${log.longitude}`}
-                      </td>
-                      <td className="py-3 px-2">
-                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-                          {log.trigger_type}
-                        </span>
-                      </td>
-                      <td className="py-3 px-2">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColor(log.status)}`}>
-                          {log.status}
-                        </span>
-                      </td>
-                      <td className="py-3 px-2">
-                        <input
-                          type="checkbox"
-                          checked={log.is_resolved || false}
-                          onChange={(e) => updateLog.mutate({ id: log.id, is_resolved: e.target.checked })}
-                          className="h-4 w-4 cursor-pointer accent-primary"
-                        />
-                      </td>
-                      <td className="py-3 px-2">
-                        <div className="flex gap-1">
-                          <Input
-                            placeholder="Add remark..."
-                            defaultValue={log.admin_remark || ""}
-                            onChange={(e) => setRemarks((prev) => ({ ...prev, [log.id]: e.target.value }))}
-                            className="h-7 text-xs w-32"
-                          />
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="h-7 text-xs px-2"
-                            onClick={() => updateLog.mutate({ id: log.id, admin_remark: remarks[log.id] ?? log.admin_remark })}
-                          >
-                            Save
-                          </Button>
-                        </div>
-                      </td>
-                      <td className="py-3 px-2 text-muted-foreground text-xs">{new Date(log.created_at).toLocaleString()}</td>
-                      <td className="py-3 px-2">
-                        <Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => setSelectedLog(log)}>
-                          View
-                        </Button>
-                      </td>
+            <>
+              {/* Mobile cards */}
+              <div className="flex flex-col gap-3 md:hidden">
+                {sosLogs?.map((log, index) => (
+                  <div key={log.id} className="bg-muted/30 rounded-lg p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-mono text-muted-foreground">{index + 1}. {log.user_id.slice(0, 8)}...</p>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColor(log.status)}`}>{log.status}</span>
+                    </div>
+                    <p className="text-xs">{log.location_address ? log.location_address.substring(0, 50) + "..." : `${log.latitude}, ${log.longitude}`}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">{log.trigger_type}</span>
+                      <p className="text-xs text-muted-foreground">{new Date(log.created_at).toLocaleDateString()}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <label className="text-xs text-muted-foreground">Resolved:</label>
+                      <input type="checkbox" checked={log.is_resolved || false} onChange={(e) => updateLog.mutate({ id: log.id, is_resolved: e.target.checked })} className="h-4 w-4 cursor-pointer accent-primary" />
+                    </div>
+                    <div className="flex gap-2">
+                      <Input placeholder="Add remark..." defaultValue={log.admin_remark || ""} onChange={(e) => setRemarks((prev) => ({ ...prev, [log.id]: e.target.value }))} className="h-8 text-xs flex-1" />
+                      <Button size="sm" variant="outline" className="h-8 text-xs" onClick={() => updateLog.mutate({ id: log.id, admin_remark: remarks[log.id] ?? log.admin_remark })}>Save</Button>
+                    </div>
+                    <Button size="sm" variant="outline" className="w-full h-8 text-xs" onClick={() => setSelectedLog(log)}>View Details</Button>
+                  </div>
+                ))}
+              </div>
+              {/* Desktop table */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">#</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">User ID</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Location</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Trigger</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Status</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Resolved</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Remark</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Time</th>
+                      <th className="text-left py-3 px-2 text-muted-foreground font-medium">Details</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {sosLogs?.map((log, index) => (
+                      <tr key={log.id} className="border-b hover:bg-muted/30 transition-colors">
+                        <td className="py-3 px-2 text-muted-foreground">{index + 1}</td>
+                        <td className="py-3 px-2 font-mono text-xs">{log.user_id.slice(0, 8)}...</td>
+                        <td className="py-3 px-2 text-xs max-w-[150px] truncate" title={log.location_address || ""}>
+                          {log.location_address ? log.location_address.substring(0, 30) + "..." : `${log.latitude}, ${log.longitude}`}
+                        </td>
+                        <td className="py-3 px-2"><span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">{log.trigger_type}</span></td>
+                        <td className="py-3 px-2"><span className={`px-2 py-1 rounded-full text-xs font-medium ${statusColor(log.status)}`}>{log.status}</span></td>
+                        <td className="py-3 px-2"><input type="checkbox" checked={log.is_resolved || false} onChange={(e) => updateLog.mutate({ id: log.id, is_resolved: e.target.checked })} className="h-4 w-4 cursor-pointer accent-primary" /></td>
+                        <td className="py-3 px-2">
+                          <div className="flex gap-1">
+                            <Input placeholder="Add remark..." defaultValue={log.admin_remark || ""} onChange={(e) => setRemarks((prev) => ({ ...prev, [log.id]: e.target.value }))} className="h-7 text-xs w-32" />
+                            <Button size="sm" variant="outline" className="h-7 text-xs px-2" onClick={() => updateLog.mutate({ id: log.id, admin_remark: remarks[log.id] ?? log.admin_remark })}>Save</Button>
+                          </div>
+                        </td>
+                        <td className="py-3 px-2 text-muted-foreground text-xs">{new Date(log.created_at).toLocaleString()}</td>
+                        <td className="py-3 px-2"><Button size="sm" variant="outline" className="h-7 text-xs" onClick={() => setSelectedLog(log)}>View</Button></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </Card>
       </main>
